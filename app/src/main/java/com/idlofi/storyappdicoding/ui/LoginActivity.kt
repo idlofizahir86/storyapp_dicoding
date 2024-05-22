@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.idlofi.storyappdicoding.MainActivity
 import com.idlofi.storyappdicoding.databinding.ActivityLoginBinding
@@ -90,20 +91,23 @@ class LoginActivity : AppCompatActivity() {
                     if (responseBody!=null && !responseBody.error){
                         sharedPrefHelper.saveUserToken(responseBody.loginResult.token)
                         sharedPrefHelper.setStatusLogin(true)
+                        Toast.makeText(this@LoginActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
                         val main = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(main)
                         finishAffinity()
-                    }else{
-                        Log.e(TAG, "onResponse: Gagal" + response.message())
+                    }else {
+                        Toast.makeText(this@LoginActivity, "Login Gagal: ${responseBody?.message ?: "Unknown error"}", Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    Toast.makeText(this@LoginActivity, "Login Gagal: ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
+                showLoading(false)
+                Toast.makeText(this@LoginActivity, "Login Gagal: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "onFailure: ${t.message}")
             }
-
         })
     }
 }

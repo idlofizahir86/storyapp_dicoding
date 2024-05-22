@@ -73,19 +73,23 @@ class RegisterActivity : AppCompatActivity() {
                 if (response.isSuccessful){
                     val responseBody = response.body()
                     if (responseBody!=null && !responseBody.error){
+                        Toast.makeText(this@RegisterActivity, "Register Beerhasil", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                         startActivity(intent)
                         finish()
-                    }else{
-                        Log.e(TAG, "onResponse: Gagal " + response.message())
+                    }else {
+                        Toast.makeText(this@RegisterActivity, "Register Gagal: ${responseBody?.message ?: "Unknown error"}", Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    Toast.makeText(this@RegisterActivity, "Register Gagal: ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
+                showLoading(false)
+                Toast.makeText(this@RegisterActivity, "Register Gagal: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "onFailure: ${t.message}")
             }
-
         })
     }
 

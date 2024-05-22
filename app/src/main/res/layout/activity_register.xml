@@ -3,15 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.RegisterActivity">
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".ui.RegisterActivity">
+    android:orientation="vertical">
 
 
     <TextView
@@ -24,7 +24,7 @@
         android:textStyle="bold"
         android:layout_marginBottom="20dp"/>
 
-    <EditText
+    <com.idlofi.storyappdicoding.customview.NameEditText
         android:id="@+id/ed_register_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"/>
 
-    <EditText
+    <com.idlofi.storyappdicoding.customview.EmailEditText
         android:id="@+id/ed_register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"/>
 
-    <EditText
+    <com.idlofi.storyappdicoding.customview.PasswordEditText
         android:id="@+id/ed_register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

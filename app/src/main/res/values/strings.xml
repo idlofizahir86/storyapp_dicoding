@@ -1,4 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Story App Dicoding</string>
     <string name="logout">LogOut</string>
+    <string name="no_internet">"Tidak ada internet tersedia"</string>
+    <string name="name_invalid">"Nama perlu diisi"</string>
+    <string name="email_invalid">"Email Tidak Valid"</string>
+    <string name="password_invalid">"Password minimal 8 karakter"</string>
 </resources>

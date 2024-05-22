@@ -3,6 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="yellow">#BADA03</color>
+    <color name="yellow_dark">#7A8701</color>
     <color name="primary">#6200EE</color> <!-- Contoh warna utama, sesuaikan dengan kebutuhan -->
     <color name="purple">#800080</color> <!-- Contoh warna ungu, sesuaikan dengan kebutuhan -->
 </resources>

@@ -2,6 +2,7 @@ package com.idlofi.storyappdicoding.service
 
 
 import com.google.gson.annotations.SerializedName
+import com.idlofi.storyappdicoding.model.StoriesModel
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -32,29 +33,29 @@ data class LoginResponse(
     val message: String
 )
 
-//data class GetAllStoryResponse(
-//
-//    @field:SerializedName("listStory")
-//    val listStory: MutableList<Stories>,
-//
-//    @field:SerializedName("error")
-//    val error: Boolean,
-//
-//    @field:SerializedName("message")
-//    val message: String
-//)
+data class GetAllStoryResponse(
 
-//data class DetailStoryResponse(
-//
-//    @field:SerializedName("error")
-//    val error: Boolean,
-//
-//    @field:SerializedName("message")
-//    val message: String,
-//
-//    @field:SerializedName("story")
-//    val story: Stories
-//)
+    @field:SerializedName("listStory")
+    val listStory: MutableList<StoriesModel>,
+
+    @field:SerializedName("error")
+    val error: Boolean,
+
+    @field:SerializedName("message")
+    val message: String
+)
+
+data class DetailStoryResponse(
+
+    @field:SerializedName("error")
+    val error: Boolean,
+
+    @field:SerializedName("message")
+    val message: String,
+
+    @field:SerializedName("story")
+    val story: StoriesModel
+)
 data class AddNewStoryWithGuestResponse(
 
     @field:SerializedName("error")
@@ -87,10 +88,10 @@ interface ApiService{
         @Field("password") password: String
     ): Call<LoginResponse>
 
-//    @GET("v1/stories")
-//    fun getAllStories(
-//        @Header("Authorization") Bearer: String
-//    ): Call<GetAllStoryResponse>
+    @GET("v1/stories")
+    fun getAllStories(
+        @Header("Authorization") Bearer: String
+    ): Call<GetAllStoryResponse>
 
     @Multipart
     @POST("v1/stories")

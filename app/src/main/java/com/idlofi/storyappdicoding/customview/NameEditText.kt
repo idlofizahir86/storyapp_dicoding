@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import com.idlofi.storyappdicoding.R
 
-class EmailEditText : AppCompatEditText {
+class NameEditText : AppCompatEditText {
     constructor(context: Context): super(context){
         init()
     }
@@ -29,8 +29,7 @@ class EmailEditText : AppCompatEditText {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                error = if (p0!!.contains("@")) null else context.getString(R.string.email_invalid)
-
+                error = if (p0!!.isNotEmpty()&& p0.toString().length < 2) context.getString(R.string.name_invalid) else null
             }
 
         })
