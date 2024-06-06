@@ -6,17 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.stories.DetailStoryActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/white" />
+
     <ImageView
         android:id="@+id/iv_detail_photo"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="30dp"
-        android:scaleType="fitXY"
         android:contentDescription="@string/app_name"
-        tools:src="@drawable/ic"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:src="@drawable/ic" />
 
     <TextView
         android:id="@+id/iv_detail_name"

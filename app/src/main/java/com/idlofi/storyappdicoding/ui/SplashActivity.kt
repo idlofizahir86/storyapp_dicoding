@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.idlofi.storyappdicoding.databinding.ActivitySplashBinding
 import com.idlofi.storyappdicoding.preferences.SharedPreferenceHelper
-import com.idlofi.storyappdicoding.ui.LoginActivity
-import com.idlofi.storyappdicoding.ui.RegisterActivity
 import com.idlofi.storyappdicoding.MainActivity
 
 class SplashActivity : AppCompatActivity() {

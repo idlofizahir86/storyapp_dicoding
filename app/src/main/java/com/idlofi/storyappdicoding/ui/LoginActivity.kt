@@ -11,7 +11,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import com.idlofi.storyappdicoding.MainActivity
 import com.idlofi.storyappdicoding.databinding.ActivityLoginBinding
 import com.idlofi.storyappdicoding.preferences.SharedPreferenceHelper
-import com.idlofi.storyappdicoding.service.ApiConfig
+import com.idlofi.storyappdicoding.service.ApiConfig.Companion.getApiService
 import com.idlofi.storyappdicoding.service.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -82,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun login(email: String, password: String){
-        val client = ApiConfig().getApiService().login(email,password)
+        val client = getApiService().login(email, password);
         client.enqueue(object: Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 showLoading(false)

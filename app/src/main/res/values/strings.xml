@@ -5,4 +5,5 @@
     <string name="name_invalid">"Nama perlu diisi"</string>
     <string name="email_invalid">"Email Tidak Valid"</string>
     <string name="password_invalid">"Password minimal 8 karakter"</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

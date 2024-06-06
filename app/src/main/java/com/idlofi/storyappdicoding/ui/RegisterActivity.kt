@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import com.idlofi.storyappdicoding.databinding.ActivityRegisterBinding
 import com.idlofi.storyappdicoding.service.ApiConfig
+import com.idlofi.storyappdicoding.service.ApiConfig.Companion.getApiService
 import com.idlofi.storyappdicoding.service.RegisterResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register(name: String, email: String, password: String){
-        val client = ApiConfig().getApiService().register(name,email,password)
+        val client = getApiService().register(name,email,password)
         client.enqueue(object: Callback<RegisterResponse>{
             override fun onResponse(
                 call: Call<RegisterResponse>,

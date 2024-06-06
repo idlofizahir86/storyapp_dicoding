@@ -2,6 +2,10 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.devtools.ksp")
+//    id("kotlin-kapt") // Tambahkan ini untuk mengaktifkan KAPT
+//    id("com.google.devtools.ksp") version
 }
 
 android {
@@ -34,6 +38,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += ("-Xopt-in=kotlin.RequiresOptIn")
     }
     buildFeatures{
         viewBinding = true
@@ -46,6 +51,12 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+//    implementation("com.google.android.ads:mediation-test-suite:3.0.0")
+
+
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.fragment:fragment-ktx:1.7.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -58,6 +69,17 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
+
+    //paging 3
+    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+
+    //room
+    implementation("androidx.room:room-ktx:2.5.2")
+    implementation("androidx.room:room-paging:2.5.2")
+    implementation("androidx.room:room-runtime:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
+//    implementation("androidx.room:room-coroutines:2.1.0-alpha04")
+
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
 

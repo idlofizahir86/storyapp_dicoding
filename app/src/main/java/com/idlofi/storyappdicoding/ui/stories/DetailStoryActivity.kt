@@ -10,6 +10,11 @@ import com.idlofi.storyappdicoding.databinding.ActivityDetailStoryBinding
 class DetailStoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailStoryBinding
+    companion object {
+        const val EXTRA_NAME = "extra_name"
+        const val EXTRA_IMAGE = "extra_image"
+        const val EXTRA_DESCRIPTION = "extra_description"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailStoryBinding.inflate(layoutInflater)
@@ -17,17 +22,21 @@ class DetailStoryActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        setSupportActionBar(binding.toolbar)
+
         // Pastikan supportActionBar tidak null sebelum mengaksesnya
         supportActionBar?.let { actionBar ->
             actionBar.title = intent.getStringExtra("list_name")
         }
 
-        binding.ivDetailName.text = intent.getStringExtra("list_name")
-        Glide.with(this)
-            .load(intent.getStringExtra("list_image"))
-            .error(R.drawable.ic_launcher_background)
-            .into(binding.ivDetailPhoto)
-        binding.ivDetailDescription.text = intent.getStringExtra("list_description")
+        binding.apply {
+            ivDetailName.text = intent.getStringExtra("list_name")
+            ivDetailDescription.text = intent.getStringExtra("list_description")
+            Glide.with(this@DetailStoryActivity)
+                .load(intent.getStringExtra("list_image"))
+                .error(R.drawable.ic_launcher_background)
+                .into(ivDetailPhoto)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

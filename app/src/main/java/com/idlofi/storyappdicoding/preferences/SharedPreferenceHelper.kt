@@ -1,17 +1,15 @@
 package com.idlofi.storyappdicoding.preferences
-
 import android.content.Context
 import android.content.SharedPreferences
 
-class SharedPreferenceHelper(context: Context) {
-    val login = "login"
-    val PREF_NAME = "main_pref"
-    val KEY_TOKEN = "Bearer"
-
-    val sharedPreference: SharedPreferences
+class SharedPreferenceHelper (context: Context){
+    private val login = "login"
+    private val myPref = "Main_pref"
+    private val myToken = "Bearer"
+    private val sharedPreference: SharedPreferences
 
     init {
-        sharedPreference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        sharedPreference = context.getSharedPreferences(myPref, Context.MODE_PRIVATE)
     }
 
     fun setStatusLogin(status: Boolean){
@@ -23,19 +21,21 @@ class SharedPreferenceHelper(context: Context) {
     }
 
     fun saveUserToken(token: String){
-        sharedPreference.edit().putString(KEY_TOKEN,token).apply()
+        sharedPreference.edit().putString(myToken,token).apply()
     }
 
     fun getUserToken(): String? {
-        return sharedPreference.getString(KEY_TOKEN," ")
+        return sharedPreference.getString(myToken," ")
     }
 
     fun clearUserToken(){
-        sharedPreference.edit().remove(KEY_TOKEN).apply()
+        sharedPreference.edit().remove(myToken).apply()
     }
 
     fun clearUserLogin(){
         sharedPreference.edit().remove(login).apply()
     }
+
+
 
 }

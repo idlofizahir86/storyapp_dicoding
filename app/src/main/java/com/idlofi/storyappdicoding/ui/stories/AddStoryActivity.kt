@@ -17,11 +17,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.idlofi.storyappdicoding.MainActivity
-import com.idlofi.storyappdicoding.R
 import com.idlofi.storyappdicoding.databinding.ActivityAddStoryBinding
 import com.idlofi.storyappdicoding.preferences.SharedPreferenceHelper
 import com.idlofi.storyappdicoding.service.AddNewStoryResponse
 import com.idlofi.storyappdicoding.service.ApiConfig
+import com.idlofi.storyappdicoding.service.ApiConfig.Companion.getApiService
 import com.idlofi.storyappdicoding.ui.stories.utils.createCustomTempFile
 import com.idlofi.storyappdicoding.ui.stories.utils.reduceFileImage
 import com.idlofi.storyappdicoding.ui.stories.utils.uriToFile
@@ -60,7 +60,7 @@ class AddStoryActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan permission.",
+                    "Tidak mendapatkan akses.",
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -174,7 +174,8 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImageToServer(img: MultipartBody.Part) {
+    private fun uploadImageToServer(img: MultipartBody.Part, ) {
+
         val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
         val scope = CoroutineScope(dispatcher)
         val description = binding.edAddDescription.text.trim().toString()
@@ -182,7 +183,7 @@ class AddStoryActivity : AppCompatActivity() {
         scope.launch {
             val token = "Bearer ${sharedPrefHelper.getUserToken()}"
             withContext(Dispatchers.Main) {
-                val client = ApiConfig().getApiService().uploadStories(token, img, description)
+                val client = getApiService().uploadStories(token, img, description)
                 client.enqueue(object : Callback<AddNewStoryResponse> {
                     override fun onResponse(
                         call: Call<AddNewStoryResponse>,
