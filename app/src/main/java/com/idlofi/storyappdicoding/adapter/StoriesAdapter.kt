@@ -22,6 +22,7 @@ class StoriesAdapter :
     PagingDataAdapter<StoryResponItem, StoriesAdapter.ViewHolder>(DIFF_CALLBACK) {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = getItem(position)
+        Log.d("StoriesAdapter", "Binding item at position $position: $data")
         if (data != null) {
             holder.bind(data)
         }
@@ -79,8 +80,8 @@ class StoriesAdapter :
             }
     }
 
-    interface OnAdapterListener {
-        fun onClick(item: StoryResponItem?)
-    }
+//    interface OnAdapterListener {
+//        fun onClick(item: StoryResponItem?)
+//    }
 }
     }

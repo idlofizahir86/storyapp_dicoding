@@ -1,6 +1,7 @@
 package com.idlofi.storyappdicoding
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +16,12 @@ class MainViewModel(private val storiesRepository: StoriesRepository) : ViewMode
 
     val stories: LiveData<PagingData<StoryResponItem>> =
         storiesRepository.getStories().cachedIn(viewModelScope)
+
+    init {
+        stories.observeForever {
+            Log.d("MainViewModel", "Data received in ViewModel: $it")
+        }
+    }
 
 }
 

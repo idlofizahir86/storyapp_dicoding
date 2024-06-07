@@ -42,24 +42,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val storyDatabase = StoryDatabase.getDatabase(this)
-//        sharedPrefHelper = SharedPreferenceHelper(this)
-
-        val authToken = sharedPrefHelper.getUserToken() ?: ""
-        val apiService = getApiService()
-
-        // Initialize ViewModel
-        val repository = StoriesRepository(storyDatabase, this, apiService)
-        viewModelFactory = ViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MapsViewModel::class.java)
-
         setSupportActionBar(binding.toolbar)
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        sharedPrefHelper = SharedPreferenceHelper(this)
+
+        val authToken = sharedPrefHelper.getUserToken() ?: ""
+
+        val storyDatabase = StoryDatabase
+
+        // Initialize ViewModel
+        val repository = StoriesRepository(storyDatabase.getDatabase(this),this, getApiService())
+        viewModelFactory = ViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MapsViewModel::class.java)
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -106,6 +105,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
     }
 
+    data class TourismPlace(
+        val name: String,
+        val latitude: Double,
+        val longitude: Double
+    )
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.map_options, menu)
         return true
@@ -113,23 +118,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.normal_type -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+            R.id.normal_type-> {
+                mMap.mapType= GoogleMap.MAP_TYPE_NORMAL
+                return true
+            }
+            R.id.satellite_type-> {
+                mMap.mapType= GoogleMap.MAP_TYPE_SATELLITE
                 true
             }
-            R.id.satellite_type -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+            R.id.terrain_type-> {
+                mMap.mapType= GoogleMap.MAP_TYPE_TERRAIN
                 true
             }
-            R.id.terrain_type -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
+            R.id.hybrid_type-> {
+                mMap.mapType= GoogleMap.MAP_TYPE_HYBRID
                 true
             }
-            R.id.hybrid_type -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-                true
+            else-> {
+                super.onOptionsItemSelected(item)
             }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

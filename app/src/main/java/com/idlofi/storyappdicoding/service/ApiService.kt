@@ -45,9 +45,9 @@ data class GetAllStoryResponse(
     @SerializedName("message")
     val message: String? = null,
     @SerializedName("listStory")
-    val listStory: ArrayList<StoryResponItem>? = null,
-    @Header("Authorization")
-    val authHeader: String? = null,
+    val listStory: List<StoryResponItem>? = null,
+//    @Header("Authorization")
+//    val authHeader: String? = null,
 
 //    @field:SerializedName("listStory")
 //    val listStory: MutableList<StoriesModel>,
@@ -108,10 +108,10 @@ interface ApiService{
     @JvmSuppressWildcards
     @GET("v1/stories")
     suspend fun getAllStoriesWithPaging(
-        @Header("Authorization") Barier: String,
+        @Header("Authorization") Bearer: String,
         @Query("page") page: Int,
         @Query("size") size: Int,
-    ): List<StoryResponItem>
+    ): GetAllStoryResponse
 
     @GET("v1/stories")
     suspend fun getAllStoriesWithLoc(

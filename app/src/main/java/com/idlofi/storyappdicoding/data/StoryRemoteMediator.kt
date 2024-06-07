@@ -35,8 +35,7 @@ class StoryRemoteMediator(
     ): MediatorResult {
 
         val page = when (loadType) {
-
-            LoadType.REFRESH ->{
+            LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                 remoteKeys?.nextKey?.minus(1) ?: INITIAL_PAGE_INDEX
             }
@@ -53,14 +52,13 @@ class StoryRemoteMediator(
                 nextKey
             }
         }
-//        val page = INITIAL_PAGE_INDEX
 
         try {
             val token = "Bearer ${sharedPreferenceHelper.getUserToken()}"
 
-            val responseData = apiService.getAllStoriesWithPaging(token, page ,state.config.pageSize)
+            val responseData = apiService.getAllStoriesWithPaging(token, page, state.config.pageSize)
 
-            val endOfPaginationReached = responseData.isEmpty()
+            val endOfPaginationReached = responseData.listStory?.isEmpty()
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
@@ -68,14 +66,16 @@ class StoryRemoteMediator(
                     database.storyDao().deleteAll()
                 }
                 val prevKey = if (page == 1) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
-                val keys = responseData.map {
+                val nextKey = if (endOfPaginationReached == true) null else page + 1
+                val keys = responseData.listStory?.map {
                     RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
-                database.remoteKeysDao().insertAll(keys)
-                database.storyDao().insertStory(responseData)
+                if (keys != null) {
+                    database.remoteKeysDao().insertAll(keys)
+                }
+                responseData.listStory?.let { database.storyDao().insertStory(it) }
             }
-            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached == true)
         } catch (exception: Exception) {
             return MediatorResult.Error(exception)
         }

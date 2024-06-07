@@ -15,6 +15,8 @@ import com.idlofi.storyappdicoding.service.GetAllStoryResponse
 class StoriesRepository(private val storyDatabase: StoryDatabase,
                         private  val context: Context,
                         private val apiService: ApiService,){
+
+    private val storyPagingSource = StoryPagingSource(apiService, context)
     fun getStories() : LiveData<PagingData<StoryResponItem>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
@@ -23,8 +25,9 @@ class StoriesRepository(private val storyDatabase: StoryDatabase,
             ),
             remoteMediator = StoryRemoteMediator(storyDatabase, apiService, context),
             pagingSourceFactory = {
-                StoryPagingSource(apiService, context)
-            storyDatabase.storyDao().getAllStory()}
+              storyPagingSource
+//            storyDatabase.storyDao().getAllStory()
+            }
 
         ).liveData
     }
