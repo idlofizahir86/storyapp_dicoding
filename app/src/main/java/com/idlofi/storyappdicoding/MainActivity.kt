@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.idlofi.storyappdicoding.adapter.LoadingStateAdapter
 import com.idlofi.storyappdicoding.adapter.StoriesAdapter
 import com.idlofi.storyappdicoding.databinding.ActivityMainBinding
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
+        binding.rvStories.layoutManager = LinearLayoutManager(this)
         binding.rvStories.adapter = storiesAdapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 storiesAdapter.retry()

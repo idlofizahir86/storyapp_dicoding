@@ -26,14 +26,14 @@ class DetailStoryActivity : AppCompatActivity() {
 
         // Pastikan supportActionBar tidak null sebelum mengaksesnya
         supportActionBar?.let { actionBar ->
-            actionBar.title = intent.getStringExtra("list_name")
+            actionBar.title = intent.getStringExtra("extra_name")
         }
 
         binding.apply {
-            ivDetailName.text = intent.getStringExtra("list_name")
-            ivDetailDescription.text = intent.getStringExtra("list_description")
+            ivDetailName.text = intent.getStringExtra("extra_name")
+            ivDetailDescription.text = intent.getStringExtra("extra_description")
             Glide.with(this@DetailStoryActivity)
-                .load(intent.getStringExtra("list_image"))
+                .load(intent.getStringExtra("extra_image"))
                 .error(R.drawable.ic_launcher_background)
                 .into(ivDetailPhoto)
         }

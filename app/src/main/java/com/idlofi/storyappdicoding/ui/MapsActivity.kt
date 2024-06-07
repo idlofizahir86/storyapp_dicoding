@@ -72,10 +72,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val initialLocation = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(initialLocation).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(initialLocation))
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isIndoorLevelPickerEnabled = true
         mMap.uiSettings.isCompassEnabled = true
@@ -105,13 +101,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
     }
 
-    data class TourismPlace(
-        val name: String,
-        val latitude: Double,
-        val longitude: Double
-    )
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.map_options, menu)
         return true
     }
