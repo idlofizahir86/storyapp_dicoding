@@ -52,6 +52,8 @@ class StoriesAdapter :
                         putExtra(DetailStoryActivity.EXTRA_NAME, item?.name)
                         putExtra(DetailStoryActivity.EXTRA_IMAGE, item?.photoUrl)
                         putExtra(DetailStoryActivity.EXTRA_DESCRIPTION, item?.description)
+                        putExtra(DetailStoryActivity.EXTRA_LONG, item!!.lon)
+                        putExtra(DetailStoryActivity.EXTRA_LAT, item!!.lat)
                     }
                     val optionsCompat: ActivityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(

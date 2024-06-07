@@ -14,6 +14,8 @@ class DetailStoryActivity : AppCompatActivity() {
         const val EXTRA_NAME = "extra_name"
         const val EXTRA_IMAGE = "extra_image"
         const val EXTRA_DESCRIPTION = "extra_description"
+        const val EXTRA_LONG = "extra_lon"
+        const val EXTRA_LAT = "extra_lat"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,10 @@ class DetailStoryActivity : AppCompatActivity() {
             actionBar.title = intent.getStringExtra("extra_name")
         }
 
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
         binding.apply {
             ivDetailName.text = intent.getStringExtra("extra_name")
             ivDetailDescription.text = intent.getStringExtra("extra_description")
@@ -36,6 +42,8 @@ class DetailStoryActivity : AppCompatActivity() {
                 .load(intent.getStringExtra("extra_image"))
                 .error(R.drawable.ic_launcher_background)
                 .into(ivDetailPhoto)
+            tvLat.text = "Latitude: " + intent.getStringExtra("extra_lat")
+            tvLong.text = "Longtitude: " + intent.getStringExtra("extra_lon")
         }
     }
 

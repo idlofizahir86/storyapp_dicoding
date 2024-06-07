@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -24,7 +25,6 @@ import com.idlofi.storyappdicoding.model.MapsViewModel
 import com.idlofi.storyappdicoding.model.ViewModelFactory
 import com.idlofi.storyappdicoding.network.StoryResponItem
 import com.idlofi.storyappdicoding.preferences.SharedPreferenceHelper
-import com.idlofi.storyappdicoding.service.ApiConfig
 import com.idlofi.storyappdicoding.service.ApiConfig.Companion.getApiService
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -55,7 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val storyDatabase = StoryDatabase
 
         // Initialize ViewModel
-        val repository = StoriesRepository(storyDatabase.getDatabase(this),this, getApiService())
+        val repository = StoriesRepository(storyDatabase.getDatabase(this), this, getApiService())
         viewModelFactory = ViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MapsViewModel::class.java)
 
@@ -65,7 +65,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         viewModel.fetchStoriesWithLocation(authToken)
         viewModel.stories.observe(this, Observer { stories ->
-            stories?.let { showMarkers(it) }
+            stories?.let {
+                if (it.isNotEmpty()) {
+                    showMarkers(it)
+                } else {
+                    Toast.makeText(this, "No stories found", Toast.LENGTH_SHORT).show()
+                }
+            }
         })
     }
 
@@ -97,36 +103,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         val bounds = boundsBuilder.build()
-        val padding = 100 // Padding dalam piksel
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
+        val padding = 10 // Padding dalam piksel
+
+        if (stories.isNotEmpty()) {
+            mMap.setOnMapLoadedCallback {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
+            }
+        }
     }
 
-     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.map_options, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.normal_type-> {
-                mMap.mapType= GoogleMap.MAP_TYPE_NORMAL
-                return true
-            }
-            R.id.satellite_type-> {
-                mMap.mapType= GoogleMap.MAP_TYPE_SATELLITE
+            R.id.normal_type -> {
+                mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
                 true
             }
-            R.id.terrain_type-> {
-                mMap.mapType= GoogleMap.MAP_TYPE_TERRAIN
+            R.id.satellite_type -> {
+                mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
                 true
             }
-            R.id.hybrid_type-> {
-                mMap.mapType= GoogleMap.MAP_TYPE_HYBRID
+            R.id.terrain_type -> {
+                mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
                 true
             }
-            else-> {
-                super.onOptionsItemSelected(item)
+            R.id.hybrid_type -> {
+                mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
