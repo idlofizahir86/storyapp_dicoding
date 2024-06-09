@@ -1,7 +1,5 @@
 package com.idlofi.storyappdicoding
 
-import android.annotation.SuppressLint
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +9,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.idlofi.storyappdicoding.adapter.LoadingStateAdapter
 import com.idlofi.storyappdicoding.adapter.StoriesAdapter
@@ -20,8 +17,6 @@ import com.idlofi.storyappdicoding.preferences.SharedPreferenceHelper
 import com.idlofi.storyappdicoding.ui.LoginActivity
 import com.idlofi.storyappdicoding.ui.MapsActivity
 import com.idlofi.storyappdicoding.ui.stories.AddStoryActivity
-import kotlinx.coroutines.launch
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var sharedPrefHelper: SharedPreferenceHelper
@@ -31,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     //    private lateinit var storiesAdapter: StoriesAdapter
     private val mainViewModel: MainViewModel by viewModels {
-        ViewModelFactory(this)
+       MainViewModel.Factory(this)
     }
     companion object {
         const val SUCCESS_UPLOAD_STORY = "Story berhasil diupload"
@@ -86,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 {
                     setTitle("Log Out")
                     setMessage("Apakah anda yakin akan log out?")
-                    setPositiveButton("Ya") { dialogInterface, _ ->
+                    setPositiveButton("Ya") { _, _ ->
                         sharedPrefHelper.clearUserLogin()
                         sharedPrefHelper.clearUserToken()
                         sharedPrefHelper.setStatusLogin(false)

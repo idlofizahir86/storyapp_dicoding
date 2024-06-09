@@ -4,10 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.idlofi.storyappdicoding.network.StoryResponItem
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -40,12 +37,14 @@ data class LoginResponse(
 
 data class GetAllStoryResponse(
 
-    @SerializedName("error")
-    val error: Boolean? = null,
-    @SerializedName("message")
-    val message: String? = null,
-    @SerializedName("listStory")
-    val listStory: List<StoryResponItem>? = null,
+    @field:SerializedName("listStory")
+    val listStory: MutableList<StoryResponItem>,
+
+    @field:SerializedName("error")
+    val error: Boolean,
+
+    @field:SerializedName("message")
+    val message: String
 //    @Header("Authorization")
 //    val authHeader: String? = null,
 
@@ -82,10 +81,6 @@ interface ApiService{
         @Field("password") password: String
     ): Call<LoginResponse>
 
-    @GET("v1/stories")
-    fun getAllStories(
-        @Header("Authorization") Bearer: String
-    ): Call<GetAllStoryResponse>
 
     @Multipart
     @POST("v1/stories")
@@ -101,8 +96,8 @@ interface ApiService{
         @Header("Authorization") Bearer: String,
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
-        @Part("lat") lat: Float,
-        @Part("lon") lon: Float
+        @Part("lat") lat: Float?,
+        @Part("lon") lon: Float?
     ): Call<AddNewStoryResponse>
 
     @JvmSuppressWildcards
@@ -114,10 +109,10 @@ interface ApiService{
     ): GetAllStoryResponse
 
     @GET("v1/stories")
-    suspend fun getAllStoriesWithLoc(
+    fun getAllStoriesWithLoc(
         @Header("Authorization") Bearer: String,
         @Query("location") location: Int? = 1,
-    ): GetAllStoryResponse
+    ): Call<GetAllStoryResponse>
 
 }
 //class ApiConfig{

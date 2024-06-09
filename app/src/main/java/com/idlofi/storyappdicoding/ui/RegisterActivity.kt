@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.idlofi.storyappdicoding.databinding.ActivityRegisterBinding
-import com.idlofi.storyappdicoding.service.ApiConfig
 import com.idlofi.storyappdicoding.service.ApiConfig.Companion.getApiService
 import com.idlofi.storyappdicoding.service.RegisterResponse
 import retrofit2.Call

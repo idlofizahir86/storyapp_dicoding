@@ -82,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun login(email: String, password: String){
-        val client = getApiService().login(email, password);
+        val client = getApiService().login(email, password)
         client.enqueue(object: Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 showLoading(false)

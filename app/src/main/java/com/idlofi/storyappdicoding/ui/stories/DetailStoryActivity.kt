@@ -42,8 +42,10 @@ class DetailStoryActivity : AppCompatActivity() {
                 .load(intent.getStringExtra("extra_image"))
                 .error(R.drawable.ic_launcher_background)
                 .into(ivDetailPhoto)
-            tvLat.text = "Latitude: " + intent.getStringExtra("extra_lat")
-            tvLong.text = "Longtitude: " + intent.getStringExtra("extra_lon")
+            val lat = intent.getDoubleExtra("extra_lat", 0.0)
+            val lon = intent.getDoubleExtra("extra_lon", 0.0)
+            tvLat.text = "Latitude: $lat"
+            tvLong.text = "Longitude: $lon"
         }
     }
 

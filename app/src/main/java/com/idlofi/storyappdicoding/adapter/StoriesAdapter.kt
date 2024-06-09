@@ -52,8 +52,8 @@ class StoriesAdapter :
                         putExtra(DetailStoryActivity.EXTRA_NAME, item?.name)
                         putExtra(DetailStoryActivity.EXTRA_IMAGE, item?.photoUrl)
                         putExtra(DetailStoryActivity.EXTRA_DESCRIPTION, item?.description)
-                        putExtra(DetailStoryActivity.EXTRA_LONG, item!!.lon)
-                        putExtra(DetailStoryActivity.EXTRA_LAT, item!!.lat)
+                        putExtra(DetailStoryActivity.EXTRA_LONG, item?.lon)
+                        putExtra(DetailStoryActivity.EXTRA_LAT, item?.lat)
                     }
                     val optionsCompat: ActivityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -72,7 +72,7 @@ class StoriesAdapter :
 
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponItem>() {
             override fun areItemsTheSame(oldItem: StoryResponItem, newItem: StoryResponItem): Boolean {
                 return oldItem == newItem
             }

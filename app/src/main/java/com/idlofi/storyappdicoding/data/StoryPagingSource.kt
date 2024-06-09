@@ -2,6 +2,7 @@ package com.idlofi.storyappdicoding.data
 
 import android.content.Context
 import android.util.Log
+import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.idlofi.storyappdicoding.service.ApiService
@@ -13,8 +14,11 @@ class StoryPagingSource(
     context: Context
 ) : PagingSource<Int, StoryResponItem>() {
 
-    private companion object {
+    companion object {
         const val INITIAL_PAGE_INDEX = 1
+        fun snapshot(items: List<StoryResponItem>): PagingData<StoryResponItem> {
+            return PagingData.from(items)
+        }
     }
 
     private var sharedPreferenceHelper: SharedPreferenceHelper = SharedPreferenceHelper(context)
@@ -26,12 +30,12 @@ class StoryPagingSource(
             Log.d("StoryPagingSource", "Loading page: $page with loadSize: ${params.loadSize}")
             val responseData = apiService.getAllStoriesWithPaging(token, page, params.loadSize)
 
-            if (responseData.error == false) {
+            if (!responseData.error) {
                 Log.d("StoryPagingSource", "Fetched data: ${responseData.listStory}")
                 LoadResult.Page(
-                    data = responseData.listStory ?: emptyList(),
+                    data = responseData.listStory,
                     prevKey = if (page == INITIAL_PAGE_INDEX) null else page - 1,
-                    nextKey = if (responseData.listStory.isNullOrEmpty()) null else page + 1
+                    nextKey = if (responseData.listStory.isEmpty()) null else page + 1
                 )
             } else {
                 Log.e("StoryPagingSource", "Error fetching data: ${responseData.message}")
